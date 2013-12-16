@@ -7,18 +7,11 @@
 
 	<import resource="classpath:originalApplicationContext.xml" />
 
-	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
-		<property name="scopes">
-			<map>
-				<entry key="request">
-					<bean class="org.springframework.context.support.SimpleThreadScope" />
-				</entry>
-			</map>
-		</property>
-	</bean>
-
 	<bean id="theService" class="com.flozano.testbeanoverride.impl.TheServiceBean"
-		scope="request" p:name="Maria">
+		scope="thread" p:name="Maria">
 		<aop:scoped-proxy />
 	</bean>
+	<!-- A "singleton" bean also fails if the scoped-proxy is there. Without 
+		the scoped-proxy, the overriding takes place and the test passes. -->
+
 </beans>
