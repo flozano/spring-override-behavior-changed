@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="classpath:originalApplicationContext.xml" />
+
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="request">
+					<bean class="org.springframework.context.support.SimpleThreadScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="theService" class="com.flozano.testbeanoverride.impl.TheServiceBean"
+		scope="request" p:name="Maria">
+		<aop:scoped-proxy />
+	</bean>
+</beans>
